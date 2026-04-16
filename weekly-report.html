@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Deliverability Report - Staffside</title>
+    <style>
+        /* CSS Variables - Design System Tokens */
+        :root {
+            --brand-poppy: #F96353;
+            --brand-charcoal: #232426;
+            --brand-white: #FFFFFF;
+            --brand-cotton: #FFFCF9;
+
+            --text-primary: #1D1E20;
+            --text-secondary: #4B4D4E;
+            --text-tertiary: #747576;
+            --text-disabled: #ACB0B4;
+            --text-link: #155FEA;
+
+            --positive-emphasis: #25935C;
+            --positive-subtle-bg: #DAFBE4;
+            --negative-emphasis: #C72326;
+            --negative-subtle-bg: #FDE8E8;
+            --info-emphasis: #155FEA;
+            --info-subtle-bg: #E0F2FF;
+            --warning-emphasis: #B45309;
+            --warning-subtle-bg: #FFF3CD;
+
+            --neutral-subtle-bg: #EAEDEF;
+            --neutral-emphasis: #5D5E60;
+
+            --border-primary: #1D1E20;
+            --border-secondary: #C4C9CF;
+
+            --bg-primary: #1D1E20;
+            --bg-page: #F8F9FA;
+            --bg-card: #FFFFFF;
+
+            --radius-xs: 2px;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding-bottom: 100px;
+        }
+
+        /* Header - Red Bar */
+        .header-top {
+            background-color: var(--brand-poppy);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-top-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            color: var(--brand-white);
+            font-size: 18px;
+        }
+
+        .header-top-left svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .header-top-right {
+            color: var(--brand-white);
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .header-top-right:hover {
+            opacity: 0.9;
+        }
+
+        /* Sub-header */
+        .header-sub {
+            background-color: var(--brand-white);
+            border-bottom: 1px solid var(--border-secondary);
+            padding: 24px;
+        }
+
+        .header-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .header-breadcrumb {
+            font-size: 14px;
+            color: var(--text-link);
+            text-decoration: none;
+            cursor: pointer;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .header-breadcrumb:hover {
+            text-decoration: underline;
+        }
+
+        .header-title {
+            font-size: 32px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .header-period {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .header-account-info {
+            background-color: var(--neutral-subtle-bg);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            min-width: 220px;
+        }
+
+        .account-info-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .account-info-value {
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .account-info-value:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* KPI Cards */
+        .kpi-section {
+            margin-bottom: 32px;
+        }
+
+        .kpi-section-title {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .kpi-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .kpi-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            transition: all 0.2s;
+        }
+
+        .kpi-card:hover {
+            border-color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .kpi-value {
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .kpi-comparison {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .kpi-previous {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .kpi-delta {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .kpi-delta.positive {
+            background-color: var(--positive-subtle-bg);
+            color: var(--positive-emphasis);
+        }
+
+        .kpi-delta.negative {
+            background-color: var(--negative-subtle-bg);
+            color: var(--negative-emphasis);
+        }
+
+        /* Collapsible Report Section */
+        .report-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-secondary);
+        }
+
+        .report-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ai-badge {
+            background-color: var(--info-subtle-bg);
+            color: var(--info-emphasis);
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .regenerate-btn {
+            background-color: transparent;
+            border: 1px solid var(--border-secondary);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .regenerate-btn:hover {
+            border-color: var(--text-primary);
+            background-color: var(--neutral-subtle-bg);
+        }
+
+        /* Rich Text Editor */
+        .editor-container {
+            margin-bottom: 20px;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            gap: 4px;
+            padding: 12px;
+            background-color: var(--neutral-subtle-bg);
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            border-bottom: 1px solid var(--border-secondary);
+        }
+
+        .editor-toolbar-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-secondary);
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .editor-toolbar-btn:hover {
+            background-color: var(--text-primary);
+            color: var(--bg-card);
+        }
+
+        .editor-subject {
+            margin-bottom: 16px;
+        }
+
+        .editor-subject label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .editor-subject input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text-primary);
+            transition: border-color 0.2s;
+        }
+
+        .editor-subject input:focus {
+            outline: none;
+            border-color: var(--info-emphasis);
+            box-shadow: 0 0 0 3px var(--info-subtle-bg);
+        }
+
+        .editor-content {
+            min-height: 400px;
+            padding: 16px;
+            border: 1px solid var(--border-secondary);
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-card);
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .editor-content:focus {
+            outline: none;
+            border-color: var(--info-emphasis);
+            box-shadow: inset 0 0 0 3px var(--info-subtle-bg);
+        }
+
+        /* Collapsible Sections */
+        .collapsible-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background-color: var(--neutral-subtle-bg);
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+
+        .collapsible-header:hover {
+            background-color: #D5D9DF;
+        }
+
+        .collapsible-header h3 {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .chevron {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-section.open .chevron {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsible-section.open .collapsible-content {
+            max-height: 2000px;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsible-body {
+            padding: 20px;
+            border-top: 1px solid var(--border-secondary);
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .data-table thead {
+            background-color: var(--neutral-subtle-bg);
+        }
+
+        .data-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-secondary);
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-secondary);
+            color: var(--text-secondary);
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background-color: var(--bg-page);
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #F2F4F7;
+        }
+
+        /* Previous Report */
+        .previous-report-content {
+            background-color: var(--neutral-subtle-bg);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Bottom Action Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-secondary);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+            z-index: 100;
+        }
+
+        .bottom-bar-left {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .bottom-bar-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-secondary);
+            color: var(--text-primary);
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            background-color: var(--neutral-subtle-bg);
+        }
+
+        .btn-primary {
+            background-color: var(--bg-primary);
+            color: var(--brand-white);
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #3A3C3F;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .modal-field {
+            margin-bottom: 20px;
+        }
+
+        .modal-field label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .modal-field input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--text-primary);
+        }
+
+        .modal-field input:focus {
+            outline: none;
+            border-color: var(--info-emphasis);
+            box-shadow: 0 0 0 3px var(--info-subtle-bg);
+        }
+
+        .modal-subject-preview {
+            background-color: var(--neutral-subtle-bg);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 20px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .modal-actions .btn-primary,
+        .modal-actions .btn-secondary {
+            flex: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .header-title {
+                font-size: 24px;
+            }
+
+            .kpi-cards {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .bottom-bar {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .bottom-bar-right {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .bottom-bar-right .btn-primary,
+            .bottom-bar-right .btn-secondary {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header-top">
+        <div class="header-top-left">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="12" r="5" fill="currentColor"/>
+                <path d="M12 2v4M12 18v4M22 12h-4M4 12H0" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span>Staffside</span>
+        </div>
+        <a class="header-top-right">Staff dashboard</a>
+    </div>
+
+    <!-- Sub-header -->
+    <div class="header-sub">
+        <div class="header-content">
+            <div class="header-left">
+                <a class="header-breadcrumb">← Weekly Deliverability Reporting</a>
+                <h1 class="header-title">American Tourister</h1>
+                <p class="header-period">Mar 2–8, 2026 vs Feb 23–Mar 1, 2026</p>
+            </div>
+            <div class="header-account-info">
+                <div>
+                    <div class="account-info-label">Contract</div>
+                    <div class="account-info-value">Enterprise Annual</div>
+                </div>
+                <div>
+                    <div class="account-info-label">CSM</div>
+                    <div class="account-info-value">Sarah Chen</div>
+                </div>
+                <div>
+                    <div class="account-info-label">Account ID</div>
+                    <div class="account-info-value">QAAJAT</div>
+                </div>
+                <div>
+                    <div class="account-info-label">Next Renewal</div>
+                    <div class="account-info-value">Jun 2026</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Email KPI Section -->
+        <div class="kpi-section">
+            <h2 class="kpi-section-title">Email Metrics</h2>
+            <div class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-label">Total Recipients</div>
+                    <div class="kpi-value">242,968</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">234,575</span>
+                        <span class="kpi-delta positive">↑ 3.5%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Delivery Rate</div>
+                    <div class="kpi-value">99.67%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">99.67%</span>
+                        <span class="kpi-delta" style="background-color: #E8E8E8; color: var(--text-tertiary);">= 0%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Bounce Rate</div>
+                    <div class="kpi-value">0.34%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">0.33%</span>
+                        <span class="kpi-delta negative">↑ 3.0%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Open Rate</div>
+                    <div class="kpi-value">70.20%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">73.54%</span>
+                        <span class="kpi-delta negative">↓ 4.5%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Click Rate</div>
+                    <div class="kpi-value">0.57%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">0.69%</span>
+                        <span class="kpi-delta negative">↓ 17.4%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Spam Rate</div>
+                    <div class="kpi-value">0.0090%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">0.0070%</span>
+                        <span class="kpi-delta negative">↑ 28.6%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Unsub Rate</div>
+                    <div class="kpi-value">0.18%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">0.22%</span>
+                        <span class="kpi-delta positive">↓ 18.2%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Revenue (KAV)</div>
+                    <div class="kpi-value">$17,378</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">$16,320</span>
+                        <span class="kpi-delta positive">↑ 6.5%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SMS KPI Section -->
+        <div class="kpi-section">
+            <h2 class="kpi-section-title">SMS Metrics</h2>
+            <div class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-label">SMS Recipients</div>
+                    <div class="kpi-value">667</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">21,998</span>
+                        <span class="kpi-delta negative">↓ 96.9%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Delivery Rate</div>
+                    <div class="kpi-value">99.40%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">97.13%</span>
+                        <span class="kpi-delta positive">↑ 2.3%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Failure Rate</div>
+                    <div class="kpi-value">0.60%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">3.47%</span>
+                        <span class="kpi-delta positive">↓ 82.7%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Click Rate</div>
+                    <div class="kpi-value">36.50%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">23.04%</span>
+                        <span class="kpi-delta positive">↑ 58.4%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Unsub Rate</div>
+                    <div class="kpi-value">3.02%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">1.02%</span>
+                        <span class="kpi-delta negative">↑ 196.1%</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">SMS Revenue (KAV)</div>
+                    <div class="kpi-value">$5,513</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">$6,407</span>
+                        <span class="kpi-delta negative">↓ 13.9%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI-Generated Report -->
+        <div class="report-card">
+            <div class="report-header">
+                <div class="report-header-left">
+                    <div class="ai-badge">✨ AI-Generated Draft</div>
+                </div>
+                <button class="regenerate-btn">Regenerate</button>
+            </div>
+
+            <div class="editor-container">
+                <div class="editor-subject">
+                    <label>Subject Line</label>
+                    <input type="text" id="reportSubject" value="American Tourister x Klaviyo — Weekly Deliverability Report (Mar 2–8, 2026)">
+                </div>
+
+                <div class="editor-toolbar">
+                    <button class="editor-toolbar-btn" onclick="formatText('bold')" title="Bold">
+                        <strong>B</strong>
+                    </button>
+                    <button class="editor-toolbar-btn" onclick="formatText('italic')" title="Italic">
+                        <em>I</em>
+                    </button>
+                    <button class="editor-toolbar-btn" onclick="formatText('insertUnorderedList')" title="Bullet List">
+                        • List
+                    </button>
+                    <button class="editor-toolbar-btn" onclick="formatText('insertOrderedList')" title="Numbered List">
+                        1. List
+                    </button>
+                </div>
+
+                <div class="editor-content" id="reportContent" contenteditable="true">Hi Team,
+
+Please find below your weekly deliverability performance summary for March 2–8, 2026.
+
+Overall Performance
+
+Email volume increased slightly this week to 242,968 total recipients (up from 234,575), with delivery rates holding steady at 99.67%. Revenue attribution climbed to $17,377.72, a 6.5% increase over last week's $16,319.76 — a strong result.
+
+Areas to Watch
+
+Open rates declined from 73.54% to 70.20%, and click rates dipped from 0.69% to 0.57%. This is likely attributable to the shift in campaign content — last week's "Adventure Ready Luggage" subject line drove a 79.15% open rate, while this week's Disney luggage promotion opened at 65.73%. The checked luggage campaign (75.19% open rate) performed closer to baseline. We'd recommend A/B testing subject lines on the next promotional send to identify what's resonating best with your audience.
+
+Spam complaint rates ticked up marginally from 0.007% to 0.009%, still well within healthy thresholds. Bounce rates remained stable at 0.34%. Unsubscribe rates actually improved, dropping from 0.22% to 0.18%.
+
+Inbox Provider Highlights
+
+Gmail (91,250 recipients) and Verizon Media Group (83,482) continue to represent your largest audience segments. Both are performing well with delivery rates above 99.8%. Hotmail/Outlook bounce rates edged up slightly to 0.57% — worth monitoring but not yet actionable. Apple open rates dropped significantly from 87.30% to 52.09%, though this is likely related to Apple's Mail Privacy Protection behavior and not an inbox placement concern.
+
+Flow Performance
+
+Your Welcome Flow remains the top revenue driver at $10,127.75 this week (up from $7,893.24), with a healthy 2.88% conversion rate. Abandoned Checkout revenue increased to $1,492.59 (from $1,128.06) with conversion improving from 3.14% to 4.09% — a notable positive trend. Abandoned Cart revenue also grew to $1,668.07 from $973.93.
+
+SMS Snapshot
+
+No SMS campaigns were sent this week, so SMS volume was limited to flows only (667 recipients vs. 21,998 last week). Flow performance was solid — the Welcome SMS flow maintained a 40.46% click rate and generated $5,253.55 in revenue. SMS unsub rates for flows were elevated at 3.02%, driven primarily by the Welcome flow at 3.64%. We'd suggest reviewing the Welcome SMS cadence to ensure opt-out rates stay manageable.
+
+Recommendations
+- A/B test promotional email subject lines to recover open rate performance
+- Monitor Hotmail/Outlook bounce rates over the next 2–3 weeks for any trend
+- Review Welcome SMS flow timing and frequency given the elevated unsub rate
+- Consider scheduling an SMS campaign for next week to maintain subscriber engagement
+
+Best regards,
+The Klaviyo Deliverability Team</div>
+            </div>
+        </div>
+
+        <!-- Inbox Providers Section -->
+        <div class="collapsible-section">
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                <h3>Top Inbox Providers — Email Campaigns (WoW Comparison)</h3>
+                <div class="chevron">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="collapsible-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Provider</th>
+                                <th>Recipients This</th>
+                                <th>Recipients Last</th>
+                                <th>Del Rate This</th>
+                                <th>Del Rate Last</th>
+                                <th>Open This</th>
+                                <th>Open Last</th>
+                                <th>Click This</th>
+                                <th>Click Last</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Gmail</td>
+                                <td>91,250</td>
+                                <td>86,793</td>
+                                <td>99.80%</td>
+                                <td>99.82%</td>
+                                <td>67.07%</td>
+                                <td>69.00%</td>
+                                <td>0.40%</td>
+                                <td>0.46%</td>
+                            </tr>
+                            <tr>
+                                <td>Verizon Media</td>
+                                <td>83,482</td>
+                                <td>81,783</td>
+                                <td>99.86%</td>
+                                <td>99.86%</td>
+                                <td>76.78%</td>
+                                <td>77.85%</td>
+                                <td>0.45%</td>
+                                <td>0.56%</td>
+                            </tr>
+                            <tr>
+                                <td>Hotmail/Outlook</td>
+                                <td>32,191</td>
+                                <td>31,359</td>
+                                <td>99.44%</td>
+                                <td>99.50%</td>
+                                <td>76.35%</td>
+                                <td>77.97%</td>
+                                <td>0.41%</td>
+                                <td>0.62%</td>
+                            </tr>
+                            <tr>
+                                <td>Apple</td>
+                                <td>12,382</td>
+                                <td>12,282</td>
+                                <td>99.18%</td>
+                                <td>98.97%</td>
+                                <td>52.09%</td>
+                                <td>87.30%</td>
+                                <td>0.16%</td>
+                                <td>0.36%</td>
+                            </tr>
+                            <tr>
+                                <td>Comcast</td>
+                                <td>5,179</td>
+                                <td>5,060</td>
+                                <td>99.61%</td>
+                                <td>99.61%</td>
+                                <td>80.00%</td>
+                                <td>80.36%</td>
+                                <td>0.89%</td>
+                                <td>0.83%</td>
+                            </tr>
+                            <tr>
+                                <td>Office 365</td>
+                                <td>4,933</td>
+                                <td>4,921</td>
+                                <td>97.63%</td>
+                                <td>97.52%</td>
+                                <td>35.40%</td>
+                                <td>37.57%</td>
+                                <td>1.50%</td>
+                                <td>1.65%</td>
+                            </tr>
+                            <tr>
+                                <td>Other</td>
+                                <td>3,273</td>
+                                <td>3,215</td>
+                                <td>99.02%</td>
+                                <td>98.91%</td>
+                                <td>64.43%</td>
+                                <td>64.94%</td>
+                                <td>1.23%</td>
+                                <td>1.64%</td>
+                            </tr>
+                            <tr>
+                                <td>Gsuite</td>
+                                <td>1,602</td>
+                                <td>1,533</td>
+                                <td>99.50%</td>
+                                <td>99.48%</td>
+                                <td>64.37%</td>
+                                <td>65.18%</td>
+                                <td>1.19%</td>
+                                <td>1.51%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Flows Section -->
+        <div class="collapsible-section">
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                <h3>Top Flows — Email (WoW Comparison)</h3>
+                <div class="chevron">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="collapsible-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Flow</th>
+                                <th>Recipients This</th>
+                                <th>Recipients Last</th>
+                                <th>Open Rate This</th>
+                                <th>Open Rate Last</th>
+                                <th>Conv Rate This</th>
+                                <th>Conv Rate Last</th>
+                                <th>Revenue This</th>
+                                <th>Revenue Last</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Welcome Flow</td>
+                                <td>1,992</td>
+                                <td>884</td>
+                                <td>46.69%</td>
+                                <td>51.76%</td>
+                                <td>2.88%</td>
+                                <td>3.98%</td>
+                                <td>$10,127.75</td>
+                                <td>$7,893.24</td>
+                            </tr>
+                            <tr>
+                                <td>Customer Thank You</td>
+                                <td>391</td>
+                                <td>404</td>
+                                <td>69.07%</td>
+                                <td>64.52%</td>
+                                <td>0.77%</td>
+                                <td>0.74%</td>
+                                <td>$285.27</td>
+                                <td>$1,419.06</td>
+                            </tr>
+                            <tr>
+                                <td>Abandoned Cart</td>
+                                <td>283</td>
+                                <td>290</td>
+                                <td>57.65%</td>
+                                <td>64.36%</td>
+                                <td>2.85%</td>
+                                <td>2.08%</td>
+                                <td>$1,668.07</td>
+                                <td>$973.93</td>
+                            </tr>
+                            <tr>
+                                <td>Abandoned Checkout</td>
+                                <td>222</td>
+                                <td>258</td>
+                                <td>59.09%</td>
+                                <td>52.94%</td>
+                                <td>4.09%</td>
+                                <td>3.14%</td>
+                                <td>$1,492.59</td>
+                                <td>$1,128.06</td>
+                            </tr>
+                            <tr>
+                                <td>Browse Abandonment</td>
+                                <td>94</td>
+                                <td>98</td>
+                                <td>56.38%</td>
+                                <td>62.25%</td>
+                                <td>0%</td>
+                                <td>1.02%</td>
+                                <td>$0.00</td>
+                                <td>$79.44</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bounce Categories Section -->
+        <div class="collapsible-section">
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                <h3>Bounce Categories (WoW Comparison)</h3>
+                <div class="chevron">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="collapsible-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>This Week</th>
+                                <th>Last Week</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mailbox Unavailable</td>
+                                <td>588</td>
+                                <td>558</td>
+                            </tr>
+                            <tr>
+                                <td>Technical</td>
+                                <td>91</td>
+                                <td>99</td>
+                            </tr>
+                            <tr>
+                                <td>Unclassified</td>
+                                <td>53</td>
+                                <td>53</td>
+                            </tr>
+                            <tr>
+                                <td>Invalid Address</td>
+                                <td>52</td>
+                                <td>42</td>
+                            </tr>
+                            <tr>
+                                <td>Content</td>
+                                <td>18</td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
+                                <td>Reputation</td>
+                                <td>6</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>External Error</td>
+                                <td>3</td>
+                                <td>3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Previous Report Section -->
+        <div class="collapsible-section">
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                <h3>Previous Report — Feb 23–Mar 1, 2026</h3>
+                <div class="chevron">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="collapsible-body">
+                    <div class="previous-report-content">Hi Team,
+
+Please find below your weekly deliverability performance summary for February 23 – March 1, 2026.
+
+Overall Performance
+Email volume reached 234,575 total recipients this week with a strong 99.67% delivery rate. Revenue attribution totaled $16,319.76. Open rates were particularly strong at 73.54%, driven by the "Adventure Ready Luggage" campaign which achieved a 79.15% open rate.
+
+Areas to Watch
+Bounce rates remain low at 0.33%, with Mailbox Unavailable accounting for the majority of bounces (558). Office 365 continues to show elevated bounce rates at 2.48% — this is consistent with prior weeks and reflects the nature of that provider's filtering. No action needed at this time.
+
+Spam complaint rates are healthy at 0.007%. Unsubscribe rates at 0.22% are within normal range.
+
+Flow Performance
+Welcome Flow generated $7,893.24 in revenue with a 3.98% conversion rate across 884 recipients. Abandoned Checkout contributed $1,128.06 with a 3.14% conversion rate. These remain your strongest performing automated flows.
+
+Recommendations
+- Continue current campaign cadence — performance metrics are healthy across the board
+- Monitor Office 365 bounce rates for any trend changes
+- Consider expanding the Welcome Flow with an additional touchpoint given strong conversion
+
+Best regards,
+The Klaviyo Deliverability Team</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Action Bar -->
+    <div class="bottom-bar">
+        <div class="bottom-bar-left">
+            Last sent: Mar 4, 2026 by Andrew K.
+        </div>
+        <div class="bottom-bar-right">
+            <button class="btn-secondary" onclick="downloadPDF()">Download PDF</button>
+            <button class="btn-primary" onclick="openSendModal()">Send Report</button>
+        </div>
+    </div>
+
+    <!-- Send Modal -->
+    <div class="modal-overlay" id="sendModal">
+        <div class="modal">
+            <h2 class="modal-title">Send Report</h2>
+
+            <div class="modal-field">
+                <label>Send to:</label>
+                <input type="email" id="sendTo" value="marketing@americantourister.com" placeholder="recipient@example.com">
+            </div>
+
+            <div class="modal-field">
+                <label>CC:</label>
+                <input type="email" id="ccTo" value="evan.murphy@klaviyo.com" placeholder="optional@example.com">
+            </div>
+
+            <div class="modal-field">
+                <label>Subject:</label>
+                <div class="modal-subject-preview" id="modalSubjectPreview">American Tourister x Klaviyo — Weekly Deliverability Report (Mar 2–8, 2026)</div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="sendReport()">Send via Front</button>
+                <button class="btn-secondary" onclick="closeSendModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Format text in contenteditable area
+        function formatText(command) {
+            document.execCommand(command, false, null);
+            document.getElementById('reportContent').focus();
+        }
+
+        // Toggle collapsible sections
+        function toggleCollapsible(header) {
+            const section = header.closest('.collapsible-section');
+            section.classList.toggle('open');
+        }
+
+        // Update modal subject preview
+        document.getElementById('reportSubject').addEventListener('change', function() {
+            document.getElementById('modalSubjectPreview').textContent = this.value;
+        });
+
+        // Open send modal
+        function openSendModal() {
+            document.getElementById('sendModal').classList.add('open');
+            document.getElementById('modalSubjectPreview').textContent =
+                document.getElementById('reportSubject').value;
+        }
+
+        // Close send modal
+        function closeSendModal() {
+            document.getElementById('sendModal').classList.remove('open');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('sendModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSendModal();
+            }
+        });
+
+        // Send report
+        function sendReport() {
+            const to = document.getElementById('sendTo').value;
+            const cc = document.getElementById('ccTo').value;
+            const subject = document.getElementById('reportSubject').value;
+
+            if (!to) {
+                alert('Please enter a recipient email address');
+                return;
+            }
+
+            // Simulate sending
+            alert('Report sent successfully to ' + to + (cc ? ' (CC: ' + cc + ')' : ''));
+            closeSendModal();
+        }
+
+        // Download PDF
+        function downloadPDF() {
+            alert('Downloading report as PDF...\n\nIn a real application, this would generate and download a PDF file.');
+        }
+
+        // Regenerate report
+        document.querySelector('.regenerate-btn').addEventListener('click', function() {
+            alert('Regenerating report with updated AI analysis...\n\nIn a real application, this would call an API to generate new content.');
+        });
+    </script>
+</body>
+</html>
