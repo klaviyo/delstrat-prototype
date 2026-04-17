@@ -5,43 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weekly Deliverability Report - Staffside</title>
     <style>
-        /* CSS Variables - Design System Tokens */
+        /* Ascent Design System Tokens
+         * Mapped from: ascent-design-system/packages/themes/src/tokens/
+         * Colors: base-tokens/colors/main.json + brand.json
+         * Typography: base-tokens/typography.json + tokens/typography.json
+         * Units: tokens/unit.json
+         */
         :root {
-            --brand-poppy: #F96353;
-            --brand-charcoal: #232426;
-            --brand-white: #FFFFFF;
-            --brand-cotton: #FFFCF9;
+            /* Brand — brand.json */
+            --color-brand-poppy: #F96353;       /* colors.brand.poppy */
+            --color-brand-charcoal: #232426;    /* colors.brand.charcoal */
+            --color-brand-cotton: #FFFCF9;      /* colors.brand.cotton */
+            --color-white: #FFFFFF;             /* colors.white */
 
-            --text-primary: #1D1E20;
-            --text-secondary: #4B4D4E;
-            --text-tertiary: #747576;
-            --text-disabled: #ACB0B4;
-            --text-link: #155FEA;
+            /* Foreground / text — coolgray scale */
+            --color-fg-primary: #1D1E20;        /* colors.coolgray.1100 */
+            --color-fg-secondary: #4B4D4E;      /* colors.coolgray.800 */
+            --color-fg-tertiary: #747576;       /* colors.coolgray.625 */
+            --color-fg-disabled: #ACB0B4;       /* colors.coolgray.400 */
+            --color-fg-link: #155FEA;           /* colors.blue.700 */
 
-            --positive-emphasis: #25935C;
-            --positive-subtle-bg: #DAFBE4;
-            --negative-emphasis: #C72326;
-            --negative-subtle-bg: #FDE8E8;
-            --info-emphasis: #155FEA;
-            --info-subtle-bg: #E0F2FF;
-            --warning-emphasis: #B45309;
-            --warning-subtle-bg: #FFF3CD;
+            /* Sentiment — foreground tokens */
+            --color-positive-emphasis: #25935C;  /* colors.green.600 */
+            --color-positive-subtle: #DAFBE4;    /* colors.green.100 */
+            --color-negative-emphasis: #C72326;  /* colors.red.800 */
+            --color-negative-subtle: #FFEDEB;    /* colors.red.100 */
+            --color-info-emphasis: #155FEA;      /* colors.blue.700 */
+            --color-info-subtle: #E0F2FF;        /* colors.blue.100 */
+            --color-attention-emphasis: #BA4608; /* colors.orange.700 (attention) */
+            --color-attention-subtle: #FFF8F0;   /* colors.orange.95 (attention) */
 
-            --neutral-subtle-bg: #EAEDEF;
-            --neutral-hover-bg: #D5D9DF;
-            --neutral-emphasis: #5D5E60;
+            /* Neutral — surface + interactive */
+            --color-neutral-subtle: #EAEDEF;    /* colors.coolgray.200 */
+            --color-neutral-hover: #C4C9CF;     /* colors.coolgray.300 */
+            --color-neutral-emphasis-fg: #5D5E60; /* colors.coolgray.700 */
 
-            --border-primary: #1D1E20;
-            --border-secondary: #C4C9CF;
+            /* Borders — border.json */
+            --color-border-primary: #1D1E20;    /* colors.coolgray.1100 */
+            --color-border-secondary: #C4C9CF;  /* colors.coolgray.300 */
 
-            --bg-primary: #1D1E20;
-            --bg-page: #F8F9FA;
-            --bg-card: #FFFFFF;
+            /* Backgrounds — background.json */
+            --color-bg-inverse: #1D1E20;        /* colors.coolgray.1100 */
+            --color-bg-page: #F9FAFB;           /* colors.coolgray.95 */
+            --color-bg-card: #FFFFFF;           /* colors.white */
 
-            --radius-xs: 2px;
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
+            /* Border radius — unit.json border.radius */
+            --radius-xs: 2px;   /* border.radius.xs */
+            --radius-sm: 4px;   /* border.radius.sm */
+            --radius-md: 8px;   /* border.radius.md */
+            --radius-lg: 12px;  /* border.radius.lg */
+
+            /* Typography — base-tokens/typography.json */
+            --font-family-default: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+
+            /* Font sizes — typography.font-size */
+            --font-size-ui3: 0.75rem;   /* 12px — UI3 */
+            --font-size-ui2: 0.875rem;  /* 14px — UI2 */
+            --font-size-ui1: 1rem;      /* 16px — UI1 / paragraph */
+            --font-size-h5: 1.25rem;    /* 20px — heading5 */
+            --font-size-h4: 1.5rem;     /* 24px — heading4 */
+            --font-size-h3: 2rem;       /* 32px — heading3 */
+
+            /* Font weights — typography.font-weight */
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semi-bold: 600;
         }
 
         /* Global Styles */
@@ -56,16 +84,16 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--bg-page);
-            color: var(--text-primary);
+            font-family: var(--font-family-default);
+            background-color: var(--color-bg-page);
+            color: var(--color-fg-primary);
             line-height: 1.5;
             padding-bottom: 100px;
         }
 
         /* Header - Red Bar */
         .header-top {
-            background-color: var(--brand-poppy);
+            background-color: var(--color-brand-poppy);
             height: 48px;
             display: flex;
             align-items: center;
@@ -78,9 +106,9 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-weight: 500;
-            color: var(--brand-white);
-            font-size: 18px;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-white);
+            font-size: var(--font-size-h5);
         }
 
         .header-top-left svg {
@@ -89,8 +117,8 @@
         }
 
         .header-top-right {
-            color: var(--brand-white);
-            font-size: 14px;
+            color: var(--color-white);
+            font-size: var(--font-size-ui2);
             text-decoration: none;
             cursor: pointer;
             transition: opacity 0.2s;
@@ -102,8 +130,8 @@
 
         /* Sub-header */
         .header-sub {
-            background-color: var(--brand-white);
-            border-bottom: 1px solid var(--border-secondary);
+            background-color: var(--color-bg-card);
+            border-bottom: 1px solid var(--color-border-secondary);
             padding: 24px;
         }
 
@@ -120,8 +148,8 @@
         }
 
         .header-breadcrumb {
-            font-size: 14px;
-            color: var(--text-link);
+            font-size: var(--font-size-ui2);
+            color: var(--color-fg-link);
             text-decoration: none;
             cursor: pointer;
             margin-bottom: 12px;
@@ -133,35 +161,35 @@
         }
 
         .header-title {
-            font-size: 32px;
-            font-weight: 500;
-            color: var(--text-primary);
+            font-size: var(--font-size-h3);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-fg-primary);
             margin-bottom: 8px;
         }
 
         .header-period {
-            font-size: 14px;
-            color: var(--text-secondary);
+            font-size: var(--font-size-ui2);
+            color: var(--color-fg-secondary);
         }
 
         .header-account-info {
-            background-color: var(--neutral-subtle-bg);
+            background-color: var(--color-neutral-subtle);
             border-radius: var(--radius-md);
             padding: 16px;
             min-width: 220px;
         }
 
         .account-info-label {
-            font-size: 11px;
-            color: var(--text-tertiary);
+            font-size: var(--font-size-ui3);
+            color: var(--color-fg-tertiary);
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
             margin-bottom: 4px;
         }
 
         .account-info-value {
-            font-size: 14px;
-            color: var(--text-primary);
+            font-size: var(--font-size-ui2);
+            color: var(--color-fg-primary);
             margin-bottom: 12px;
         }
 
@@ -182,10 +210,10 @@
         }
 
         .kpi-section-title {
-            font-size: 14px;
-            color: var(--text-tertiary);
+            font-size: var(--font-size-ui2);
+            color: var(--color-fg-tertiary);
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
             margin-bottom: 16px;
         }
 
@@ -196,29 +224,29 @@
         }
 
         .kpi-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-secondary);
+            background-color: var(--color-bg-card);
+            border: 1px solid var(--color-border-secondary);
             border-radius: var(--radius-md);
             padding: 16px;
             transition: all 0.2s;
         }
 
         .kpi-card:hover {
-            border-color: var(--text-primary);
+            border-color: var(--color-fg-primary);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .kpi-label {
-            font-size: 12px;
-            color: var(--text-tertiary);
+            font-size: var(--font-size-ui3);
+            color: var(--color-fg-tertiary);
             margin-bottom: 8px;
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
         }
 
         .kpi-value {
-            font-size: 22px;
-            font-weight: 500;
-            color: var(--text-primary);
+            font-size: var(--font-size-h4);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-fg-primary);
             margin-bottom: 8px;
         }
 
@@ -229,8 +257,8 @@
         }
 
         .kpi-previous {
-            font-size: 12px;
-            color: var(--text-tertiary);
+            font-size: var(--font-size-ui3);
+            color: var(--color-fg-tertiary);
         }
 
         .kpi-delta {
@@ -239,29 +267,29 @@
             gap: 4px;
             padding: 2px 6px;
             border-radius: var(--radius-sm);
-            font-size: 11px;
-            font-weight: 500;
+            font-size: var(--font-size-ui3);
+            font-weight: var(--font-weight-medium);
         }
 
         .kpi-delta.positive {
-            background-color: var(--positive-subtle-bg);
-            color: var(--positive-emphasis);
+            background-color: var(--color-positive-subtle);
+            color: var(--color-positive-emphasis);
         }
 
         .kpi-delta.negative {
-            background-color: var(--negative-subtle-bg);
-            color: var(--negative-emphasis);
+            background-color: var(--color-negative-subtle);
+            color: var(--color-negative-emphasis);
         }
 
         .kpi-delta.neutral {
-            background-color: #E8E8E8;
-            color: var(--text-tertiary);
+            background-color: var(--color-neutral-subtle);
+            color: var(--color-fg-tertiary);
         }
 
         /* Collapsible Sections */
         .collapsible-section {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-secondary);
+            background-color: var(--color-bg-card);
+            border: 1px solid var(--color-border-secondary);
             border-radius: var(--radius-md);
             margin-bottom: 24px;
             overflow: hidden;
@@ -272,20 +300,20 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px;
-            background-color: var(--neutral-subtle-bg);
+            background-color: var(--color-neutral-subtle);
             cursor: pointer;
             user-select: none;
             transition: background-color 0.2s;
         }
 
         .collapsible-header:hover {
-            background-color: var(--neutral-hover-bg);
+            background-color: var(--color-neutral-hover);
         }
 
         .collapsible-header h3 {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-primary);
+            font-size: var(--font-size-ui2);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-fg-primary);
             margin: 0;
         }
 
@@ -314,40 +342,40 @@
 
         .collapsible-body {
             padding: 20px;
-            border-top: 1px solid var(--border-secondary);
+            border-top: 1px solid var(--color-border-secondary);
         }
 
         /* Table Styles */
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px;
+            font-size: var(--font-size-ui2);
         }
 
         .data-table thead {
-            background-color: var(--neutral-subtle-bg);
+            background-color: var(--color-neutral-subtle);
         }
 
         .data-table th {
             padding: 12px;
             text-align: left;
-            font-weight: 500;
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--border-secondary);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-fg-primary);
+            border-bottom: 1px solid var(--color-border-secondary);
         }
 
         .data-table td {
             padding: 12px;
-            border-bottom: 1px solid var(--border-secondary);
-            color: var(--text-secondary);
+            border-bottom: 1px solid var(--color-border-secondary);
+            color: var(--color-fg-secondary);
         }
 
         .data-table tbody tr:nth-child(even) {
-            background-color: var(--bg-page);
+            background-color: var(--color-bg-page);
         }
 
         .data-table tbody tr:hover {
-            background-color: #F2F4F7;
+            background-color: var(--color-neutral-subtle);
         }
 
         /* Section header with source badge */
@@ -364,12 +392,12 @@
         }
 
         .source-badge {
-            font-size: 11px;
-            color: var(--text-tertiary);
-            background-color: var(--neutral-subtle-bg);
+            font-size: var(--font-size-ui3);
+            color: var(--color-fg-tertiary);
+            background-color: var(--color-neutral-subtle);
             padding: 2px 8px;
             border-radius: var(--radius-sm);
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
         }
 
         .collapsible-header h3 .source-badge {
@@ -384,41 +412,41 @@
         }
 
         .reputation-label {
-            font-size: 12px;
-            color: var(--text-tertiary);
+            font-size: var(--font-size-ui3);
+            color: var(--color-fg-tertiary);
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
             margin-bottom: 8px;
         }
 
         .reputation-value {
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--text-primary);
+            font-size: var(--font-size-h5);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-fg-primary);
             margin-bottom: 4px;
         }
 
         .reputation-previous {
-            font-size: 12px;
-            color: var(--text-tertiary);
+            font-size: var(--font-size-ui3);
+            color: var(--color-fg-tertiary);
         }
 
         .reputation-pill {
             display: inline-block;
             padding: 4px 10px;
             border-radius: var(--radius-sm);
-            font-size: 13px;
-            font-weight: 500;
+            font-size: var(--font-size-ui2);
+            font-weight: var(--font-weight-medium);
         }
 
         .reputation-pill.healthy {
-            background-color: var(--positive-subtle-bg);
-            color: var(--positive-emphasis);
+            background-color: var(--color-positive-subtle);
+            color: var(--color-positive-emphasis);
         }
 
         .reputation-pill.medium {
-            background-color: var(--warning-subtle-bg);
-            color: var(--warning-emphasis);
+            background-color: var(--color-attention-subtle);
+            color: var(--color-attention-emphasis);
         }
 
         .auth-list {
@@ -428,12 +456,12 @@
         }
 
         .auth-pass {
-            font-size: 13px;
-            color: var(--positive-emphasis);
-            background-color: var(--positive-subtle-bg);
+            font-size: var(--font-size-ui2);
+            color: var(--color-positive-emphasis);
+            background-color: var(--color-positive-subtle);
             padding: 4px 8px;
             border-radius: var(--radius-sm);
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
         }
 
         /* Bottom Action Bar */
@@ -442,8 +470,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: var(--bg-card);
-            border-top: 1px solid var(--border-secondary);
+            background-color: var(--color-bg-card);
+            border-top: 1px solid var(--color-border-secondary);
             padding: 16px 24px;
             display: flex;
             justify-content: space-between;
@@ -453,8 +481,8 @@
         }
 
         .bottom-bar-left {
-            font-size: 13px;
-            color: var(--text-tertiary);
+            font-size: var(--font-size-ui2);
+            color: var(--color-fg-tertiary);
         }
 
         .bottom-bar-right {
@@ -464,20 +492,20 @@
         }
 
         .btn-secondary {
+            font-family: var(--font-family-default);
             background-color: transparent;
-            border: 1px solid var(--border-secondary);
-            color: var(--text-primary);
+            border: 1px solid var(--color-border-primary);
+            color: var(--color-fg-primary);
             padding: 10px 18px;
             border-radius: var(--radius-md);
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: var(--font-size-ui2);
+            font-weight: var(--font-weight-medium);
             transition: all 0.2s;
         }
 
         .btn-secondary:hover {
-            border-color: var(--text-primary);
-            background-color: var(--neutral-subtle-bg);
+            background-color: var(--color-neutral-subtle);
         }
 
         /* Responsive */
@@ -488,7 +516,7 @@
             }
 
             .header-title {
-                font-size: 24px;
+                font-size: var(--font-size-h4);
             }
 
             .kpi-cards {
