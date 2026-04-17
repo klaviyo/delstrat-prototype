@@ -350,16 +350,108 @@
             background-color: #F2F4F7;
         }
 
-        /* Previous Report */
-        .previous-report-content {
+        /* Section header with source badge */
+        .kpi-section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .kpi-section-header .kpi-section-title {
+            margin-bottom: 0;
+        }
+
+        .source-badge {
+            font-size: 11px;
+            color: var(--text-tertiary);
             background-color: var(--neutral-subtle-bg);
-            padding: 20px;
-            border-radius: var(--radius-md);
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            text-transform: none;
+        }
+
+        .collapsible-header h3 .source-badge {
+            margin-left: 12px;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        /* Gmail Reputation Grid */
+        .reputation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 24px;
+        }
+
+        .reputation-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .reputation-value {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .reputation-previous {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .reputation-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
             font-size: 13px;
-            line-height: 1.7;
-            color: var(--text-secondary);
-            white-space: pre-wrap;
-            word-wrap: break-word;
+            font-weight: 500;
+        }
+
+        .reputation-pill.healthy {
+            background-color: var(--positive-subtle-bg);
+            color: var(--positive-emphasis);
+        }
+
+        .reputation-pill.medium {
+            background-color: var(--warning-subtle-bg);
+            color: var(--warning-emphasis);
+        }
+
+        .reputation-pill.low,
+        .reputation-pill.bad {
+            background-color: var(--negative-subtle-bg);
+            color: var(--negative-emphasis);
+        }
+
+        .auth-list {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .auth-pass {
+            font-size: 13px;
+            color: var(--positive-emphasis);
+            background-color: var(--positive-subtle-bg);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+        }
+
+        .auth-fail {
+            font-size: 13px;
+            color: var(--negative-emphasis);
+            background-color: var(--negative-subtle-bg);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
         }
 
         /* Bottom Action Bar */
@@ -458,7 +550,7 @@
         <div class="header-content">
             <div class="header-left">
                 <a class="header-breadcrumb">← Weekly Deliverability Reporting</a>
-                <h1 class="header-title">American Tourister</h1>
+                <h1 class="header-title">Eastie Gear</h1>
                 <p class="header-period">Mar 2–8, 2026 vs Feb 23–Mar 1, 2026</p>
             </div>
             <div class="header-account-info">
@@ -555,6 +647,136 @@
             </div>
         </div>
 
+        <!-- Inbox Placement Section - Inbox Monster -->
+        <div class="kpi-section">
+            <div class="kpi-section-header">
+                <h2 class="kpi-section-title">Inbox Placement</h2>
+                <span class="source-badge">Source: Inbox Monster</span>
+            </div>
+            <div class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-label">Inbox Rate</div>
+                    <div class="kpi-value">91.5%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">93.2%</span>
+                        <span class="kpi-delta negative">↓ 1.7pp</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Spam Folder Rate</div>
+                    <div class="kpi-value">7.1%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">5.5%</span>
+                        <span class="kpi-delta negative">↑ 1.6pp</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Missing Rate</div>
+                    <div class="kpi-value">1.4%</div>
+                    <div class="kpi-comparison">
+                        <span class="kpi-previous">1.3%</span>
+                        <span class="kpi-delta neutral">↑ 0.1pp</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placement by Provider -->
+        <div class="collapsible-section">
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                <h3>Placement by Provider<span class="source-badge">Source: Inbox Monster</span></h3>
+                <div class="chevron">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="collapsible-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Provider</th>
+                                <th>Inbox This</th>
+                                <th>Spam This</th>
+                                <th>Missing This</th>
+                                <th>Inbox Last</th>
+                                <th>Δ Inbox</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Gmail</td>
+                                <td>89.0%</td>
+                                <td>9.2%</td>
+                                <td>1.8%</td>
+                                <td>92.0%</td>
+                                <td>↓ 3.0pp</td>
+                            </tr>
+                            <tr>
+                                <td>Yahoo / Verizon</td>
+                                <td>95.2%</td>
+                                <td>3.6%</td>
+                                <td>1.2%</td>
+                                <td>95.4%</td>
+                                <td>↓ 0.2pp</td>
+                            </tr>
+                            <tr>
+                                <td>Outlook / Hotmail</td>
+                                <td>90.3%</td>
+                                <td>7.9%</td>
+                                <td>1.8%</td>
+                                <td>91.7%</td>
+                                <td>↓ 1.4pp</td>
+                            </tr>
+                            <tr>
+                                <td>Apple</td>
+                                <td>93.8%</td>
+                                <td>4.7%</td>
+                                <td>1.5%</td>
+                                <td>94.1%</td>
+                                <td>↓ 0.3pp</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spam Trap Activity -->
+        <div class="collapsible-section">
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                <h3>Spam Trap Activity<span class="source-badge">Source: Inbox Monster</span></h3>
+                <div class="chevron">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="collapsible-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Trap Type</th>
+                                <th>This Week</th>
+                                <th>Last Week</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Recycled</td>
+                                <td>2</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>Pristine</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>Typo</td>
+                                <td>3</td>
+                                <td>2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- SMS KPI Section -->
         <div class="kpi-section">
             <h2 class="kpi-section-title">SMS Metrics</h2>
@@ -611,7 +833,7 @@
         </div>
 
         <!-- Inbox Providers Section -->
-        <div class="collapsible-section">
+        <div class="collapsible-section open">
             <div class="collapsible-header" onclick="toggleCollapsible(this)">
                 <h3>Top Inbox Providers — Email Campaigns (WoW Comparison)</h3>
                 <div class="chevron">▼</div>
@@ -723,6 +945,47 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gmail Sender Reputation - Google Postmaster Tools -->
+        <div class="collapsible-section open">
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                <h3>Gmail Sender Reputation<span class="source-badge">Source: Google Postmaster Tools</span></h3>
+                <div class="chevron">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="collapsible-body">
+                    <div class="reputation-grid">
+                        <div class="reputation-item">
+                            <div class="reputation-label">Domain Reputation</div>
+                            <div class="reputation-value">
+                                <span class="reputation-pill medium">Medium</span>
+                            </div>
+                            <div class="reputation-previous">Previous: High</div>
+                        </div>
+                        <div class="reputation-item">
+                            <div class="reputation-label">Spam Rate (Gmail)</div>
+                            <div class="reputation-value">0.08%</div>
+                            <div class="reputation-previous">Previous: 0.05%</div>
+                        </div>
+                        <div class="reputation-item">
+                            <div class="reputation-label">Authentication</div>
+                            <div class="reputation-value auth-list">
+                                <span class="auth-pass">SPF ✓</span>
+                                <span class="auth-pass">DKIM ✓</span>
+                                <span class="auth-pass">DMARC ✓</span>
+                            </div>
+                        </div>
+                        <div class="reputation-item">
+                            <div class="reputation-label">Bulk Sender Compliance</div>
+                            <div class="reputation-value">
+                                <span class="reputation-pill healthy">Compliant</span>
+                            </div>
+                            <div class="reputation-previous">Previous: Compliant</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -869,39 +1132,6 @@
             </div>
         </div>
 
-        <!-- Previous Report Section -->
-        <div class="collapsible-section">
-            <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                <h3>Previous Report — Feb 23–Mar 1, 2026</h3>
-                <div class="chevron">▼</div>
-            </div>
-            <div class="collapsible-content">
-                <div class="collapsible-body">
-                    <div class="previous-report-content">Hi Team,
-
-Please find below your weekly deliverability performance summary for February 23 – March 1, 2026.
-
-Overall Performance
-Email volume reached 234,575 total recipients this week with a strong 99.67% delivery rate. Revenue attribution totaled $16,319.76. Open rates were particularly strong at 73.54%, driven by the "Adventure Ready Luggage" campaign which achieved a 79.15% open rate.
-
-Areas to Watch
-Bounce rates remain low at 0.33%, with Mailbox Unavailable accounting for the majority of bounces (558). Office 365 continues to show elevated bounce rates at 2.48% — this is consistent with prior weeks and reflects the nature of that provider's filtering. No action needed at this time.
-
-Spam complaint rates are healthy at 0.007%. Unsubscribe rates at 0.22% are within normal range.
-
-Flow Performance
-Welcome Flow generated $7,893.24 in revenue with a 3.98% conversion rate across 884 recipients. Abandoned Checkout contributed $1,128.06 with a 3.14% conversion rate. These remain your strongest performing automated flows.
-
-Recommendations
-- Continue current campaign cadence — performance metrics are healthy across the board
-- Monitor Office 365 bounce rates for any trend changes
-- Consider expanding the Welcome Flow with an additional touchpoint given strong conversion
-
-Best regards,
-The Klaviyo Deliverability Team</div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Bottom Action Bar -->
