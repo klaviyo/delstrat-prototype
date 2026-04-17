@@ -1,0 +1,21 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.1",
+  "base_commit_sha": "b0c717402aafa953173c9fd9eb7d440385f90c66",
+  "prompts": {
+    "7e63dd34466105ff": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "65fd1ca7-2132-4e9b-a728-dea6f9bb61b1",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "bwbrophy",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 18,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    }
+  }
+}
