@@ -1,0 +1,23 @@
+weekly-report.html
+  8d3555af73019dd5 59,61-63,133,150,158,163,601-602,1163-1166
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.1",
+  "base_commit_sha": "70dfb4407a9321e0d6cf41ce185b8a95e4d04221",
+  "prompts": {
+    "8d3555af73019dd5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ede9788c-d642-4761-b2c4-8dd01ae1575e",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "bwbrophy",
+      "messages": [],
+      "total_additions": 14,
+      "total_deletions": 40,
+      "accepted_lines": 14,
+      "overriden_lines": 0
+    }
+  }
+}
