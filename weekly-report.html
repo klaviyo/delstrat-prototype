@@ -14,15 +14,12 @@
         :root {
             /* Brand — brand.json */
             --color-brand-poppy: #F96353;       /* colors.brand.poppy */
-            --color-brand-charcoal: #232426;    /* colors.brand.charcoal */
-            --color-brand-cotton: #FFFCF9;      /* colors.brand.cotton */
             --color-white: #FFFFFF;             /* colors.white */
 
             /* Foreground / text — coolgray scale */
             --color-fg-primary: #1D1E20;        /* colors.coolgray.1100 */
             --color-fg-secondary: #4B4D4E;      /* colors.coolgray.800 */
             --color-fg-tertiary: #747576;       /* colors.coolgray.625 */
-            --color-fg-disabled: #ACB0B4;       /* colors.coolgray.400 */
             --color-fg-link: #155FEA;           /* colors.blue.700 */
 
             /* Sentiment — foreground tokens */
@@ -30,30 +27,24 @@
             --color-positive-subtle: #DAFBE4;    /* colors.green.100 */
             --color-negative-emphasis: #C72326;  /* colors.red.800 */
             --color-negative-subtle: #FFEDEB;    /* colors.red.100 */
-            --color-info-emphasis: #155FEA;      /* colors.blue.700 */
-            --color-info-subtle: #E0F2FF;        /* colors.blue.100 */
             --color-attention-emphasis: #BA4608; /* colors.orange.700 (attention) */
             --color-attention-subtle: #FFF8F0;   /* colors.orange.95 (attention) */
 
             /* Neutral — surface + interactive */
             --color-neutral-subtle: #EAEDEF;    /* colors.coolgray.200 */
             --color-neutral-hover: #C4C9CF;     /* colors.coolgray.300 */
-            --color-neutral-emphasis-fg: #5D5E60; /* colors.coolgray.700 */
 
             /* Borders — border.json */
             --color-border-primary: #1D1E20;    /* colors.coolgray.1100 */
             --color-border-secondary: #C4C9CF;  /* colors.coolgray.300 */
 
             /* Backgrounds — background.json */
-            --color-bg-inverse: #1D1E20;        /* colors.coolgray.1100 */
             --color-bg-page: #F9FAFB;           /* colors.coolgray.95 */
             --color-bg-card: #FFFFFF;           /* colors.white */
 
             /* Border radius — unit.json border.radius */
-            --radius-xs: 2px;   /* border.radius.xs */
             --radius-sm: 4px;   /* border.radius.sm */
             --radius-md: 8px;   /* border.radius.md */
-            --radius-lg: 12px;  /* border.radius.lg */
 
             /* Typography — base-tokens/typography.json */
             --font-family-default: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
@@ -61,15 +52,15 @@
             /* Font sizes — typography.font-size */
             --font-size-ui3: 0.75rem;   /* 12px — UI3 */
             --font-size-ui2: 0.875rem;  /* 14px — UI2 */
-            --font-size-ui1: 1rem;      /* 16px — UI1 / paragraph */
             --font-size-h5: 1.25rem;    /* 20px — heading5 */
             --font-size-h4: 1.5rem;     /* 24px — heading4 */
             --font-size-h3: 2rem;       /* 32px — heading3 */
 
-            /* Font weights — typography.font-weight */
-            --font-weight-regular: 400;
+            /* Font weight — typography.font-weight */
             --font-weight-medium: 500;
-            --font-weight-semi-bold: 600;
+
+            /* Layout */
+            --layout-max-width: 1100px;
         }
 
         /* Global Styles */
@@ -139,46 +130,37 @@
          *     </PageBody>
          *   </Page>
          */
-        .page {
-            display: flex;
-            flex-direction: column;
-        }
-
+        .page,
         .page-head {
-            /* PageHead stacks any header components (PageHeader, optional Header above) */
             display: flex;
             flex-direction: column;
         }
 
         .page-header {
-            /* PageHeader — the page's title region */
             background-color: var(--color-bg-card);
             border-bottom: 1px solid var(--color-border-secondary);
             padding: 24px;
         }
 
         .page-body {
-            /* PageBody hosts the main content layout (BasicLayout or EditorLayout) */
             flex: 1;
         }
 
         .basic-layout {
-            /* BasicLayout — optional sidebars flank a centered main column.
-             * Gray background is a BasicLayout default (inherited from body here). */
+            /* BasicLayout gray background is a default; inherited from body here. */
             display: flex;
             justify-content: center;
             gap: 24px;
         }
 
         .basic-layout-main {
-            /* BasicLayoutMain — fixed width, centered (max-width 1100px) */
             flex: 1;
-            max-width: 1100px;
+            max-width: var(--layout-max-width);
             padding: 32px 24px;
         }
 
         .page-header-content {
-            max-width: 1100px;
+            max-width: var(--layout-max-width);
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -569,7 +551,6 @@
                 flex-direction: column;
             }
 
-            .bottom-bar-right .btn-primary,
             .bottom-bar-right .btn-secondary {
                 width: 100%;
             }
@@ -577,7 +558,6 @@
     </style>
 </head>
 <body>
-    <!-- App-shell header (provided by Site / app-shell package) -->
     <div class="app-shell-header">
         <div class="app-shell-header-left">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -590,11 +570,8 @@
         <a class="app-shell-header-right">Staff dashboard</a>
     </div>
 
-    <!-- <Page> -->
     <div class="page">
-        <!-- <PageHead> -->
         <div class="page-head">
-            <!-- <PageHeader> -->
             <div class="page-header">
                 <div class="page-header-content">
             <div class="header-left">
@@ -621,14 +598,11 @@
                 </div>
             </div>
         </div>
-            </div><!-- /.page-header -->
-        </div><!-- /.page-head -->
+            </div>
+        </div>
 
-        <!-- <PageBody> -->
         <div class="page-body">
-            <!-- <BasicLayout> -->
             <div class="basic-layout">
-                <!-- <BasicLayoutMain> -->
                 <div class="basic-layout-main">
         <!-- Email KPI Section -->
         <div class="kpi-section">
@@ -1186,10 +1160,10 @@
             </div>
         </div>
 
-                </div><!-- /.basic-layout-main -->
-            </div><!-- /.basic-layout -->
-        </div><!-- /.page-body -->
-    </div><!-- /.page -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bottom Action Bar -->
     <div class="bottom-bar">
