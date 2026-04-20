@@ -91,8 +91,9 @@
             padding-bottom: 100px;
         }
 
-        /* Header - Red Bar */
-        .header-top {
+        /* App-shell header — represents the Site app-shell header provided by
+         * Klaviyo's app-shell package. Conceptually sits ABOVE the Page component. */
+        .app-shell-header {
             background-color: var(--color-brand-poppy);
             height: 48px;
             display: flex;
@@ -102,7 +103,7 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
-        .header-top-left {
+        .app-shell-header-left {
             display: flex;
             align-items: center;
             gap: 12px;
@@ -111,12 +112,12 @@
             font-size: var(--font-size-h5);
         }
 
-        .header-top-left svg {
+        .app-shell-header-left svg {
             width: 24px;
             height: 24px;
         }
 
-        .header-top-right {
+        .app-shell-header-right {
             color: var(--color-white);
             font-size: var(--font-size-ui2);
             text-decoration: none;
@@ -124,18 +125,59 @@
             transition: opacity 0.2s;
         }
 
-        .header-top-right:hover {
+        .app-shell-header-right:hover {
             opacity: 0.9;
         }
 
-        /* Sub-header */
-        .header-sub {
+        /* Ascent layout & structure — mirrors:
+         *   <Page>
+         *     <PageHead><PageHeader/></PageHead>
+         *     <PageBody>
+         *       <BasicLayout>
+         *         <BasicLayoutMain/>
+         *       </BasicLayout>
+         *     </PageBody>
+         *   </Page>
+         */
+        .page {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-head {
+            /* PageHead stacks any header components (PageHeader, optional Header above) */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-header {
+            /* PageHeader — the page's title region */
             background-color: var(--color-bg-card);
             border-bottom: 1px solid var(--color-border-secondary);
             padding: 24px;
         }
 
-        .header-content {
+        .page-body {
+            /* PageBody hosts the main content layout (BasicLayout or EditorLayout) */
+            flex: 1;
+        }
+
+        .basic-layout {
+            /* BasicLayout — optional sidebars flank a centered main column.
+             * Gray background is a BasicLayout default (inherited from body here). */
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .basic-layout-main {
+            /* BasicLayoutMain — fixed width, centered (max-width 1100px) */
+            flex: 1;
+            max-width: 1100px;
+            padding: 32px 24px;
+        }
+
+        .page-header-content {
             max-width: 1100px;
             margin: 0 auto;
             display: flex;
@@ -195,13 +237,6 @@
 
         .account-info-value:last-child {
             margin-bottom: 0;
-        }
-
-        /* Main Content */
-        .main {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 32px 24px;
         }
 
         /* KPI Cards */
@@ -510,7 +545,7 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .header-content {
+            .page-header-content {
                 flex-direction: column;
                 gap: 16px;
             }
@@ -542,9 +577,9 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header-top">
-        <div class="header-top-left">
+    <!-- App-shell header (provided by Site / app-shell package) -->
+    <div class="app-shell-header">
+        <div class="app-shell-header-left">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
                 <circle cx="12" cy="12" r="5" fill="currentColor"/>
@@ -552,12 +587,16 @@
             </svg>
             <span>Staffside</span>
         </div>
-        <a class="header-top-right">Staff dashboard</a>
+        <a class="app-shell-header-right">Staff dashboard</a>
     </div>
 
-    <!-- Sub-header -->
-    <div class="header-sub">
-        <div class="header-content">
+    <!-- <Page> -->
+    <div class="page">
+        <!-- <PageHead> -->
+        <div class="page-head">
+            <!-- <PageHeader> -->
+            <div class="page-header">
+                <div class="page-header-content">
             <div class="header-left">
                 <a class="header-breadcrumb">← Weekly Deliverability Reporting</a>
                 <h1 class="header-title">Eastie Gear</h1>
@@ -582,10 +621,15 @@
                 </div>
             </div>
         </div>
-    </div>
+            </div><!-- /.page-header -->
+        </div><!-- /.page-head -->
 
-    <!-- Main Content -->
-    <div class="main">
+        <!-- <PageBody> -->
+        <div class="page-body">
+            <!-- <BasicLayout> -->
+            <div class="basic-layout">
+                <!-- <BasicLayoutMain> -->
+                <div class="basic-layout-main">
         <!-- Email KPI Section -->
         <div class="kpi-section">
             <h2 class="kpi-section-title">Email Metrics</h2>
@@ -1142,7 +1186,10 @@
             </div>
         </div>
 
-    </div>
+                </div><!-- /.basic-layout-main -->
+            </div><!-- /.basic-layout -->
+        </div><!-- /.page-body -->
+    </div><!-- /.page -->
 
     <!-- Bottom Action Bar -->
     <div class="bottom-bar">
